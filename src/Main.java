@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -12,10 +14,25 @@ public class Main {
         persons.add(new Person("Sasha", "Muraeva Tregukrudova Veronika Petrovna", 45));
         persons.add(new Person("Dmitriy", "Pascal Don Kihot ", 20));
 
+        Comparator<Person> comparator = (o1, o2) -> {
+            String[] words1 = o1.getSurname().split(" ");
+            String[] words2 = o2.getSurname().split(" ");
+            if (words1.length >= 3 && words2.length >= 3) {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            } else if (words1.length != words2.length) {
+                return Integer.compare(words1.length, words2.length);
+            } else {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            }
+        };
+
         System.out.println(persons);
 
-        persons.sort(new PersonComparator(3));
+        Collections.sort(persons,comparator);
+        System.out.println("---------       ---------       ---------       ---------");
 
         System.out.println(persons);
+
     }
 }
+
